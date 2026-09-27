@@ -1,0 +1,30 @@
+@app.route("/api/all-india-predict", methods=["GET"])
+def all_india_predict():
+    predictions = [
+        {
+            "state": "Jammu & Kashmir",
+            "lat": 34.08,
+            "lng": 74.79,
+            "alert": "Avalanche",
+            "level": "RED",
+            "description": "Bandipora district"
+        },
+        {
+            "state": "Uttar Pradesh",
+            "lat": 26.85,
+            "lng": 80.94,
+            "alert": "Dense Fog",
+            "level": "YELLOW",
+            "description": "21 districts"
+        },
+        {
+            "state": "Punjab",
+            "lat": 31.14,
+            "lng": 75.34,
+            "alert": "Dense Fog",
+            "level": "ORANGE",
+            "description": "Amritsar, Gurdaspur"
+        }
+    ]
+
+    return jsonify(predictions)

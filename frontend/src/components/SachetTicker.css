@@ -1,0 +1,66 @@
+.sachet-ticker-container {
+  display: flex;
+  background-color: #fce4e4;
+  border-bottom: 2px solid #ef4444;
+  height: 40px;
+  align-items: center;
+  font-family: var(--font-main);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  overflow: hidden;
+}
+
+.ticker-label {
+  background-color: #ef4444;
+  color: white;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  padding: 0 15px;
+  font-size: 0.85rem;
+  letter-spacing: 1px;
+  white-space: nowrap;
+  position: relative;
+  z-index: 2;
+  box-shadow: 2px 0 5px rgba(0,0,0,0.2);
+}
+
+.ticker-scroll {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+
+.ticker-track {
+  width: max-content;
+  color: #c51212;
+  font-weight: 600;
+  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+  animation: ticker-scroll 30s linear infinite;
+}
+
+.ticker-item {
+  margin-right: 15px;
+}
+
+.ticker-separator {
+  margin-left: 15px;
+  color: #ef4444;
+  opacity: 0.5;
+}
+
+.ticker-scroll:hover .ticker-track {
+  animation-play-state: paused;
+}
+
+@keyframes ticker-scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}

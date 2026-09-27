@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>NDARCS Admin Panel - Rescue Operations</title>
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <!-- Admin CSS -->
+  <link rel="stylesheet" href="admin.css">
+
+  <!-- Leaflet Map -->
+  <link rel="stylesheet"
+        href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+</head>
+
+<body>
+
+<div class="container">
+
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+    <h2>NDARCS</h2>
+
+    <a href="admin.html">
+      <i class="fa-solid fa-chart-line"></i> Dashboard
+    </a>
+
+    <a href="manage.html">
+      <i class="fa-solid fa-pen"></i> Disaster Management
+    </a>
+
+    <a href="recognition.html">
+      <i class="fa-solid fa-robot"></i> Disaster Recognition
+    </a>
+
+    <a href="userm.html">
+      <i class="fa-solid fa-users"></i> User Management
+    </a>
+
+    <a class="active" href="rescue_operations.html">
+      <i class="fa-solid fa-truck-medical"></i> Rescue Operations
+    </a>
+
+    <a href="settings.html">
+      <i class="fa-solid fa-gear"></i> Settings
+    </a>
+  </div>
+
+  <!-- MAIN CONTENT -->
+  <div class="main-content">
+
+    <h1>🚑 Rescue Operations</h1>
+
+    <!-- ADD TEAM -->
+    <div class="card">
+      <h3>Add Rescue Team</h3>
+
+      <div class="form-grid">
+        <input type="text" placeholder="Team Name">
+        
+        <select>
+          <option>Select Organization</option>
+          <option>NDRF</option>
+          <option>Fire Department</option>
+          <option>Police</option>
+          <option>NGO</option>
+        </select>
+
+        <input type="text" placeholder="Available Equipment">
+        <input type="number" placeholder="Max Capacity">
+        <input type="text" placeholder="Assigned Disaster Zone">
+
+        <button class="btn">
+          <i class="fa-solid fa-plus"></i> Add Team
+        </button>
+      </div>
+    </div>
+
+    <!-- TEAM LIST -->
+    <div class="card">
+      <h3>Rescue Teams</h3>
+
+      <table>
+        <tr>
+          <th>Team</th>
+          <th>Organization</th>
+          <th>Equipment</th>
+          <th>Capacity</th>
+          <th>Zone</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+
+        <tr>
+          <td>Alpha-1</td>
+          <td>NDRF</td>
+          <td>Boats, Medical</td>
+          <td>20</td>
+          <td>Pune</td>
+          <td><span class="active-status">Available</span></td>
+          <td>
+            <button class="btn-sm">
+              <i class="fa-solid fa-location-arrow"></i> Assign
+            </button>
+          </td>
+        </tr>
+      </table>
+    </div>
+
+    <!-- LIVE TRACKING -->
+    <div class="card">
+      <h3>Live Team Tracking</h3>
+      <div id="teamMap"></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- MAP SCRIPT -->
+<script>
+  const map = L.map('teamMap').setView([18.5204, 73.8567], 6);
+
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '© OpenStreetMap'
+  }).addTo(map);
+
+  L.marker([18.5204, 73.8567])
+    .addTo(map)
+    .bindPopup("Rescue Team - Pune")
+    .openPopup();
+</script>
+
+</body>
+</html>

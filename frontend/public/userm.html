@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>NDARCS Admin Panel</title>
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <!-- Common CSS -->
+  <link rel="stylesheet" href="admin.css">
+</head>
+
+<body>
+<div class="container">
+
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <h2>NDARCS</h2>
+
+    <a href="admin.html">
+      <i class="fa-solid fa-chart-line"></i> Dashboard
+    </a>
+
+    <a href="manage.html">
+      <i class="fa-solid fa-pen"></i> Disaster Management
+    </a>
+
+    <a href="recognition.html">
+      <i class="fa-solid fa-robot"></i> Disaster Recognition
+    </a>
+
+    <a href="userm.html">
+      <i class="fa-solid fa-users"></i> User Management
+    </a>
+
+    <a href="rescue_operations.html">
+      <i class="fa-solid fa-truck-medical"></i> Rescue Operations
+    </a>
+
+    <a href="settings.html">
+      <i class="fa-solid fa-gear"></i> Settings
+    </a>
+  </div>
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: "Segoe UI", sans-serif;
+      background: linear-gradient(135deg, #f1f5f9, #e2e8f0);
+    }
+
+    .container {
+      display: flex;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      width: 230px;
+      background: #0f172a;
+      color: white;
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .sidebar h2 {
+      margin-bottom: 30px;
+    }
+
+    .sidebar a {
+      display: block;
+      color: #cbd5f5;
+      padding: 10px;
+      text-decoration: none;
+      margin-bottom: 8px;
+      border-radius: 6px;
+    }
+
+    .sidebar a.active,
+    .sidebar a:hover {
+      background: #2563eb;
+      color: white;
+    }
+
+    /* Main content */
+    .main-content {
+      flex: 1;
+      padding: 30px;
+    }
+
+    h1 {
+      margin-bottom: 20px;
+    }
+
+    /* Search */
+    .search-container {
+      margin-bottom: 20px;
+      display: flex;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+
+    .search-container input {
+      padding: 8px 10px;
+      border-radius: 6px;
+      border: 1px solid #cbd5f5;
+      width: 200px;
+    }
+
+    /* Table */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: white;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 6px 15px rgba(0,0,0,0.08);
+    }
+
+    th, td {
+      padding: 12px;
+      border-bottom: 1px solid #e5e7eb;
+      text-align: left;
+    }
+
+    th {
+      background: #f1f5f9;
+    }
+
+    .action-btn {
+      background: #2563eb;
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      border-radius: 6px;
+      cursor: pointer;
+      margin-right: 5px;
+      font-size: 13px;
+    }
+
+    .action-btn.deactivate {
+      background: #ef4444;
+    }
+
+    .action-btn.verify {
+      background: #10b981;
+    }
+
+    .action-btn.ban {
+      background: #f59e0b;
+    }
+
+    .action-btn.reset {
+      background: #6366f1;
+    }
+  </style>
+</head>
+
+<body>
+<div class="container">
+
+  <!-- Sidebar -->
+  
+
+  <!-- Main Content -->
+  <div class="main-content">
+    <h1>User Management</h1>
+
+    <!-- Search -->
+    <div class="search-container">
+      <input type="text" id="searchName" placeholder="Search by Name">
+      <input type="text" id="searchLocation" placeholder="Search by Location">
+      <input type="text" id="searchPhone" placeholder="Search by Phone">
+    </div>
+
+    <!-- User Table -->
+    <table id="userTable">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Location</th>
+          <th>Phone</th>
+          <th>Verified</th>
+          <th>Active</th>
+          <th>Emergency History</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Users will appear here -->
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<script>
+  let users = [
+    { name: "Alice", location: "Pune", phone: "9876543210", verified: false, active: true, history: 3 },
+    { name: "Bob", location: "Mumbai", phone: "9123456780", verified: true, active: true, history: 5 },
+    { name: "Charlie", location: "Nagpur", phone: "9988776655", verified: true, active: false, history: 2 }
+  ];
+
+  const tableBody = document.querySelector('#userTable tbody');
+
+  function renderTable() {
+    tableBody.innerHTML = '';
+    users.forEach((u, i) => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td>${u.name}</td>
+        <td>${u.location}</td>
+        <td>${u.phone}</td>
+        <td>${u.verified ? "Yes" : "No"}</td>
+        <td>${u.active ? "Yes" : "No"}</td>
+        <td>${u.history}</td>
+        <td>
+          <button class="action-btn verify" onclick="verifyUser(${i})">Verify</button>
+          <button class="action-btn deactivate" onclick="toggleActive(${i})">${u.active ? "Deactivate" : "Activate"}</button>
+          <button class="action-btn ban" onclick="banUser(${i})">Ban</button>
+          <button class="action-btn reset" onclick="resetPassword(${i})">Reset PW</button>
+        </td>
+      `;
+      tableBody.appendChild(tr);
+    });
+  }
+
+  function verifyUser(i) {
+    users[i].verified = true;
+    renderTable();
+    alert(`User ${users[i].name} verified.`);
+  }
+
+  function toggleActive(i) {
+    users[i].active = !users[i].active;
+    renderTable();
+  }
+
+  function banUser(i) {
+    if(confirm(`Ban user ${users[i].name} for fake reports?`)) {
+      users.splice(i,1);
+      renderTable();
+    }
+  }
+
+  function resetPassword(i) {
+    alert(`Password for ${users[i].name} has been reset (dummy alert).`);
+  }
+
+  // Search functionality
+  const searchName = document.getElementById('searchName');
+  const searchLocation = document.getElementById('searchLocation');
+  const searchPhone = document.getElementById('searchPhone');
+
+  function filterUsers() {
+    const nameVal = searchName.value.toLowerCase();
+    const locVal = searchLocation.value.toLowerCase();
+    const phoneVal = searchPhone.value.toLowerCase();
+
+    const filtered = users.filter(u => 
+      u.name.toLowerCase().includes(nameVal) &&
+      u.location.toLowerCase().includes(locVal) &&
+      u.phone.toLowerCase().includes(phoneVal)
+    );
+
+    tableBody.innerHTML = '';
+    filtered.forEach((u,i) => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td>${u.name}</td>
+        <td>${u.location}</td>
+        <td>${u.phone}</td>
+        <td>${u.verified ? "Yes" : "No"}</td>
+        <td>${u.active ? "Yes" : "No"}</td>
+        <td>${u.history}</td>
+        <td>
+          <button class="action-btn verify" onclick="verifyUser(${i})">Verify</button>
+          <button class="action-btn deactivate" onclick="toggleActive(${i})">${u.active ? "Deactivate" : "Activate"}</button>
+          <button class="action-btn ban" onclick="banUser(${i})">Ban</button>
+          <button class="action-btn reset" onclick="resetPassword(${i})">Reset PW</button>
+        </td>
+      `;
+      tableBody.appendChild(tr);
+    });
+  }
+
+  searchName.addEventListener('input', filterUsers);
+  searchLocation.addEventListener('input', filterUsers);
+  searchPhone.addEventListener('input', filterUsers);
+
+  renderTable();
+</script>
+
+</body>
+</html>

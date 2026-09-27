@@ -1,0 +1,31 @@
+.forecast-container {
+  display: flex;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.map-section {
+  flex: 3;
+}
+
+.forecast-list {
+  flex: 1;
+  max-height: 500px;
+  overflow-y: auto;
+}
+
+.forecast-list h3 {
+  background-color: #1e5bbf;
+  color: white;
+  text-align: center;
+  padding: 10px;
+  border-radius: 6px 6px 0 0;
+}
+
+.forecast-card {
+  background-color: yellow;
+  padding: 10px;
+  margin: 5px 0;
+  font-weight: bold;
+  border-radius: 4px;
+}

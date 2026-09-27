@@ -1,0 +1,57 @@
+.map-wrapper {
+  display: flex;
+  gap: 20px;
+}
+
+.map-left {
+  width: 40%;
+  background: #fff;
+  padding: 15px;
+  border-radius: 8px;
+}
+
+.map-right {
+  width: 60%;
+  background: #fff;
+  padding: 15px;
+  border-radius: 8px;
+  max-height: 500px;
+  overflow-y: auto;
+}
+.map-wrapper {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 25px;
+}
+
+/* LEFT MAP */
+.map-left {
+  width: 40%;
+  background: #fff;
+  padding: 15px;
+  border-radius: 10px;
+  height: 420px;
+}
+
+.india-map {
+  height: 350px;
+  width: 100%;
+  border-radius: 8px;
+}
+
+/* RIGHT STATE DATA */
+.map-right {
+  width: 60%;
+  background: #fff;
+  padding: 15px;
+  border-radius: 10px;
+  max-height: 420px;
+  overflow-y: auto;
+}
+
+.state-card {
+  border: 1px solid #e0e0e0;
+  padding: 12px;
+  border-radius: 8px;
+  margin-bottom: 12px;
+}

@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>NDARCS Admin Panel</title>
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <!-- Common CSS -->
+  <link rel="stylesheet" href="admin.css">
+</head>
+
+<body>
+<div class="container">
+
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <h2>NDARCS</h2>
+
+    <a href="admin.html">
+      <i class="fa-solid fa-chart-line"></i> Dashboard
+    </a>
+
+    <a href="manage.html">
+      <i class="fa-solid fa-pen"></i> Disaster Management
+    </a>
+
+    <a href="recognition.html">
+      <i class="fa-solid fa-robot"></i> Disaster Recognition
+    </a>
+
+    <a href="userm.html">
+      <i class="fa-solid fa-users"></i> User Management
+    </a>
+
+    <a href="rescue_operations.html">
+      <i class="fa-solid fa-truck-medical"></i> Rescue Operations
+    </a>
+
+    <a href="settings.html">
+      <i class="fa-solid fa-gear"></i> Settings
+    </a>
+  </div>
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: "Segoe UI", sans-serif;
+      background: linear-gradient(135deg, #f1f5f9, #e2e8f0);
+    }
+
+    .container {
+      display: flex;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      width: 230px;
+      background: #0f172a;
+      color: white;
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .sidebar h2 {
+      margin-bottom: 30px;
+    }
+
+    .sidebar a {
+      display: block;
+      color: #cbd5f5;
+      padding: 10px;
+      text-decoration: none;
+      margin-bottom: 8px;
+      border-radius: 6px;
+    }
+
+    .sidebar a.active,
+    .sidebar a:hover {
+      background: #2563eb;
+      color: white;
+    }
+
+    /* Main content */
+    .main-content {
+      flex: 1;
+      padding: 30px;
+    }
+
+    h1 {
+      margin-bottom: 20px;
+    }
+
+    /* Form */
+    form {
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 6px 15px rgba(0,0,0,0.08);
+      margin-bottom: 40px;
+    }
+
+    form .form-group {
+      margin-bottom: 15px;
+    }
+
+    form label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: 600;
+    }
+
+    form input, form select, form textarea {
+      width: 100%;
+      padding: 8px 10px;
+      border-radius: 6px;
+      border: 1px solid #cbd5f5;
+    }
+
+    form button {
+      background: #2563eb;
+      color: white;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    form button:hover {
+      background: #1d4ed8;
+    }
+
+    /* Table */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: white;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 6px 15px rgba(0,0,0,0.08);
+    }
+
+    th, td {
+      padding: 12px;
+      text-align: left;
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    th {
+      background: #f1f5f9;
+    }
+
+    .action-btn {
+      background: #2563eb;
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      border-radius: 6px;
+      cursor: pointer;
+      margin-right: 5px;
+    }
+
+    .action-btn.delete {
+      background: #ef4444;
+    }
+
+    .action-btn:hover {
+      opacity: 0.8;
+    }
+  </style>
+</head>
+
+<body>
+<div class="container">
+
+  <!-- Sidebar -->
+  
+
+  <!-- Main Content -->
+  <div class="main-content">
+    <h1>Disaster Management</h1>
+
+    <!-- Add/Edit Disaster Form -->
+    <form id="disasterForm">
+      <div class="form-group">
+        <label for="disasterType">Disaster Type</label>
+        <select id="disasterType" required>
+          <option value="">Select Type</option>
+          <option>Flood</option>
+          <option>Earthquake</option>
+          <option>Fire</option>
+          <option>Cyclone</option>
+          <option>Landslide</option>
+          <option>Heatwave</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="disasterName">Disaster Name / Title</label>
+        <input type="text" id="disasterName" required>
+      </div>
+
+      <div class="form-group">
+        <label for="severity">Severity Level</label>
+        <select id="severity" required>
+          <option value="">Select Severity</option>
+          <option>Low</option>
+          <option>Medium</option>
+          <option>High</option>
+          <option>Critical</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="areaRadius">Affected Area Radius (km)</label>
+        <input type="number" id="areaRadius" min="1" required>
+      </div>
+
+      <div class="form-group">
+        <label for="startDate">Start Date</label>
+        <input type="date" id="startDate" required>
+      </div>
+
+      <div class="form-group">
+        <label for="endDate">End Date</label>
+        <input type="date" id="endDate">
+      </div>
+
+      <div class="form-group">
+        <label for="status">Disaster Status</label>
+        <select id="status" required>
+          <option value="">Select Status</option>
+          <option>Active</option>
+          <option>Under Control</option>
+          <option>Resolved</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="mediaUpload">Upload Images / Videos</label>
+        <input type="file" id="mediaUpload" multiple accept="image/*,video/*">
+      </div>
+
+      <button type="submit">Add / Update Disaster</button>
+    </form>
+
+    <!-- Disaster Records Table -->
+    <table id="disasterTable">
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Title</th>
+          <th>Severity</th>
+          <th>Area (km)</th>
+          <th>Start Date</th>
+          <th>End Date</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Records will appear here dynamically -->
+      </tbody>
+    </table>
+
+  </div>
+</div>
+
+<script>
+  const disasterForm = document.getElementById('disasterForm');
+  const disasterTable = document.getElementById('disasterTable').querySelector('tbody');
+
+  let disasters = [];
+  let editIndex = null;
+
+  // Handle form submission
+  disasterForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    const newDisaster = {
+      type: document.getElementById('disasterType').value,
+      title: document.getElementById('disasterName').value,
+      severity: document.getElementById('severity').value,
+      radius: document.getElementById('areaRadius').value,
+      startDate: document.getElementById('startDate').value,
+      endDate: document.getElementById('endDate').value,
+      status: document.getElementById('status').value
+    };
+
+    if(editIndex !== null){
+      disasters[editIndex] = newDisaster;
+      editIndex = null;
+    } else {
+      disasters.push(newDisaster);
+    }
+
+    disasterForm.reset();
+    renderTable();
+  });
+
+  // Render table
+  function renderTable() {
+    disasterTable.innerHTML = '';
+    disasters.forEach((d, i) => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td>${d.type}</td>
+        <td>${d.title}</td>
+        <td>${d.severity}</td>
+        <td>${d.radius}</td>
+        <td>${d.startDate}</td>
+        <td>${d.endDate}</td>
+        <td>${d.status}</td>
+        <td>
+          <button class="action-btn" onclick="editDisaster(${i})">Edit</button>
+          <button class="action-btn delete" onclick="deleteDisaster(${i})">Delete</button>
+        </td>
+      `;
+      disasterTable.appendChild(tr);
+    });
+  }
+
+  // Edit disaster
+  function editDisaster(i){
+    const d = disasters[i];
+    document.getElementById('disasterType').value = d.type;
+    document.getElementById('disasterName').value = d.title;
+    document.getElementById('severity').value = d.severity;
+    document.getElementById('areaRadius').value = d.radius;
+    document.getElementById('startDate').value = d.startDate;
+    document.getElementById('endDate').value = d.endDate;
+    document.getElementById('status').value = d.status;
+    editIndex = i;
+  }
+
+  // Delete disaster
+  function deleteDisaster(i){
+    disasters.splice(i,1);
+    renderTable();
+  }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,41 @@
+.state-alerts {
+  padding: 20px;
+}
+
+.state-alerts h2 {
+  background: #2c63b5;
+  color: white;
+  padding: 15px;
+  border-radius: 10px;
+  text-align: center;
+}
+
+table {
+  width: 100%;
+  margin-top: 20px;
+  border-collapse: collapse;
+}
+
+th, td {
+  padding: 10px;
+  border-bottom: 1px dashed #ccc;
+}
+
+.moderate {
+  background: orange;
+  color: white;
+  text-align: center;
+}
+
+.low {
+  background: yellow;
+  text-align: center;
+}
+
+button {
+  background: #2c63b5;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+}

@@ -1,0 +1,71 @@
+.weather-panel {
+  background: linear-gradient(180deg, #4a86c5, #6ea0d6);
+  color: white;
+  padding: 15px;
+  border-radius: 12px;
+}
+
+.weather-header {
+  background: #2f65ad;
+  padding: 10px;
+  font-weight: bold;
+  border-radius: 6px;
+}
+
+.search-box {
+  display: flex;
+  align-items: center;
+  background: white;
+  color: black;
+  padding: 8px;
+  border-radius: 8px;
+  margin: 12px 0;
+}
+
+.search-box input {
+  border: none;
+  outline: none;
+  flex: 1;
+  margin: 0 8px;
+}
+
+.current-weather {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  background: rgba(255,255,255,0.15);
+  padding: 12px;
+  border-radius: 10px;
+}
+
+.section-title {
+  margin: 15px 0 8px;
+}
+
+.hourly {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+}
+
+.hour-box {
+  min-width: 90px;
+  background: rgba(255,255,255,0.15);
+  padding: 10px;
+  border-radius: 10px;
+  text-align: center;
+}
+
+.daily .day-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.3);
+}
+.weather-box {
+  background: #0b1d33;
+  color: white;
+  padding: 12px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+}

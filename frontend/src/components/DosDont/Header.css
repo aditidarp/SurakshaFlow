@@ -1,0 +1,32 @@
+.ndma-top {
+  text-align: center;
+  font-weight: bold;
+  padding: 6px;
+  background: #ffffff;
+  border-bottom: 1px solid #ddd;
+}
+
+.ndma-header {
+  background: #1f4fa3;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 30px;
+}
+
+.logo {
+  font-size: 22px;
+  font-weight: bold;
+}
+
+.menu a {
+  color: white;
+  text-decoration: none;
+  margin-left: 25px;
+  font-weight: 600;
+}
+
+.menu a:hover {
+  text-decoration: underline;
+}

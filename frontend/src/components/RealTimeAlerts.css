@@ -1,0 +1,228 @@
+.realtime-alerts {
+  color: var(--text-main);
+}
+
+.live-alerts-heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.live-alerts-heading h4 {
+  margin: 2px 0 0;
+  font-family: var(--font-display);
+  font-size: 1.45rem;
+  letter-spacing: -0.02em;
+}
+
+.live-state {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #166534;
+  background: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  border-radius: 999px;
+  padding: 7px 10px;
+  font-size: 0.72rem;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  display: inline-block;
+  border-radius: 50%;
+  background: #16a34a;
+  box-shadow: 0 0 0 4px rgba(22, 163, 74, 0.12);
+}
+
+.last-updated {
+  color: var(--text-muted);
+  font-size: 0.78rem;
+}
+
+.alerts-count {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  border-top: 1px solid #e2e8f0;
+  border-bottom: 1px solid #e2e8f0;
+  padding: 14px 0;
+  margin: 16px 0;
+  color: var(--text-muted);
+  font-size: 0.82rem;
+}
+
+.active-count {
+  color: var(--primary);
+  font-family: var(--font-display);
+  font-size: 1.8rem;
+  font-weight: 800;
+}
+
+.alerts-list {
+  display: grid;
+  gap: 10px;
+}
+
+.alert-card {
+  padding: 14px 14px 14px 16px;
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.05);
+}
+
+.alert-card-header,
+.alert-card-body {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.alert-card-header {
+  min-width: 0;
+}
+
+.alert-card-title {
+  color: #475569;
+  font-size: 0.74rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.alert-severity-pill {
+  margin-left: auto;
+  color: #fff;
+  border-radius: 999px;
+  padding: 4px 7px;
+  font-size: 0.66rem;
+  font-weight: 800;
+}
+
+.alert-card-body {
+  display: grid;
+  justify-items: start;
+  gap: 6px;
+  margin-top: 9px;
+}
+
+.alert-headline {
+  font-size: 0.92rem;
+  line-height: 1.35;
+}
+
+.alert-card-location,
+.alert-card-time {
+  color: var(--text-muted);
+  font-size: 0.76rem;
+}
+
+.alert-detail-button,
+.source-error button,
+.view-all-btn {
+  border: 0;
+  background: transparent;
+  color: var(--primary);
+  padding: 0;
+  font: inherit;
+  font-size: 0.76rem;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.alert-detail-button:hover,
+.source-error button:hover,
+.view-all-btn:hover {
+  text-decoration: underline;
+}
+
+.no-alerts {
+  padding: 32px 16px;
+  text-align: center;
+  background: #f8fafc;
+  border: 1px dashed #cbd5e1;
+  border-radius: 10px;
+}
+
+.no-alerts p {
+  margin: 8px 0 4px;
+  font-weight: 800;
+}
+
+.no-alerts small {
+  color: var(--text-muted);
+}
+
+.empty-mark {
+  display: inline-grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: #dcfce7;
+  color: #166534;
+  font-size: 0.68rem;
+  font-weight: 900;
+}
+
+.source-error {
+  background: #fff7ed;
+  border-color: #fed7aa;
+  color: #9a3412;
+}
+
+.alerts-loading {
+  display: grid;
+  gap: 9px;
+  padding: 20px 0;
+}
+
+.loading-bar {
+  display: block;
+  height: 12px;
+  width: 100%;
+  border-radius: 6px;
+  background: linear-gradient(90deg, #e2e8f0, #f8fafc, #e2e8f0);
+  background-size: 200% 100%;
+  animation: loading-sheen 1.4s ease-in-out infinite;
+}
+
+.loading-bar.short { width: 65%; }
+
+@keyframes loading-sheen {
+  to { background-position: -200% 0; }
+}
+
+.alert-detail-backdrop {
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  background: rgba(15, 23, 42, 0.42);
+  z-index: 1200;
+}
+
+.alert-detail-modal {
+  position: relative;
+  width: min(520px, 100%);
+  padding: 28px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 24px 80px rgba(15, 23, 42, 0.28);
+}
+
+.alert-detail-modal h3 { margin: 6px 0 18px; font-family: var(--font-display); font-size: 1.4rem; }
+.alert-detail-modal p:last-child { color: #475569; line-height: 1.6; }
+.alert-detail-close { position: absolute; top: 16px; right: 16px; border: 0; background: #f1f5f9; color: #475569; border-radius: 6px; padding: 7px 9px; cursor: pointer; }
+.detail-grid { display: grid; grid-template-columns: 110px 1fr; gap: 10px 16px; margin-bottom: 18px; font-size: 0.85rem; }
+.detail-grid span { color: var(--text-muted); }
+
+@media (prefers-reduced-motion: reduce) {
+  .loading-bar { animation: none; }
+}

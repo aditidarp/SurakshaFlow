@@ -1,0 +1,21 @@
+.forecast-controls {
+  display: flex;
+  gap: 10px;
+  padding: 0 15px 15px;
+}
+
+button {
+  padding: 8px 15px;
+  border: 1px solid #1e5bb8;
+  background: white;
+  cursor: pointer;
+}
+
+button.active {
+  background-color: #1e5bb8;
+  color: white;
+}
+
+select {
+  padding: 8px;
+}

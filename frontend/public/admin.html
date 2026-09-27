@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>NDARCS Admin Panel</title>
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <!-- Common CSS -->
+  <link rel="stylesheet" href="common.css">
+</head>
+
+<body>
+<div class="container">
+
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <h2>NDARCS</h2>
+
+    <a href="admin.html">
+      <i class="fa-solid fa-chart-line"></i> Dashboard
+    </a>
+
+    <a href="manage.html">
+      <i class="fa-solid fa-pen"></i> Disaster Management
+    </a>
+
+    <a href="recognition.html">
+      <i class="fa-solid fa-robot"></i> Disaster Recognition
+    </a>
+
+    <a href="userm.html">
+      <i class="fa-solid fa-users"></i> User Management
+    </a>
+
+    <a href="rescue_operations.html">
+      <i class="fa-solid fa-truck-medical"></i> Rescue Operations
+    </a>
+
+    <a href="settings.html">
+      <i class="fa-solid fa-gear"></i> Settings
+    </a>
+  </div>
+
+  <!-- Main Content -->
+  <div class="main-content">
+    <!-- 🔽 PAGE-SPECIFIC CONTENT STARTS HERE -->
+
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <!-- Leaflet -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+  <!-- Leaflet Heatmap -->
+  <script src="https://unpkg.com/leaflet.heat/dist/leaflet-heat.js"></script>
+
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <!-- Socket.io -->
+  <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: "Segoe UI", sans-serif;
+      background: linear-gradient(135deg, #f1f5f9, #e2e8f0);
+    }
+
+    .container {
+      display: flex;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      width: 300px;
+      background: #0f172a;
+      color: white;
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .sidebar h2 {
+      margin-bottom: 30px;
+    }
+
+    .sidebar a {
+      display: block;
+      color: #cbd5f5;
+      padding: 10px;
+      text-decoration: none;
+      margin-bottom: 8px;
+      border-radius: 6px;
+    }
+
+    .sidebar a.active,
+    .sidebar a:hover {
+      background: #2563eb;
+      color: white;
+    }
+
+    /* Main content */
+    .main-content {
+      flex: 1;
+      padding: 30px;
+    }
+
+    h1 {
+      margin-bottom: 20px;
+    }
+
+    h2 {
+      margin-bottom: 15px;
+    }
+
+    .dashboard-section {
+      margin-bottom: 40px;
+    }
+
+    /* Cards */
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+    }
+
+    .stat-card {
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 6px 15px rgba(0,0,0,0.08);
+    }
+
+    .stat-card h3 {
+      font-size: 15px;
+      color: #475569;
+      margin-bottom: 10px;
+    }
+
+    .stat-card p {
+      font-size: 28px;
+      font-weight: bold;
+      margin: 0;
+    }
+
+    /* Table */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: white;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 6px 15px rgba(0,0,0,0.08);
+    }
+
+    th, td {
+      padding: 12px;
+      border-bottom: 1px solid #e5e7eb;
+      text-align: left;
+    }
+
+    th {
+      background: #f1f5f9;
+    }
+
+    /* Map */
+    #map {
+      height: 350px;
+      border-radius: 12px;
+      box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+    }
+
+    /* Chart */
+    canvas {
+      background: white;
+      padding: 15px;
+      border-radius: 12px;
+      box-shadow: 0 6px 15px rgba(0,0,0,0.08);
+    }
+
+    /* Alerts */
+    #alertsPanel {
+      background: white;
+      padding: 15px;
+      border-radius: 12px;
+      max-height: 250px;
+      overflow-y: auto;
+      box-shadow: 0 6px 15px rgba(0,0,0,0.08);
+    }
+
+    .alert {
+      padding: 10px;
+      margin-bottom: 10px;
+      border-left: 5px solid red;
+      background: #fef2f2;
+      font-size: 14px;
+    }
+
+    /* Alert Form Styling */
+    #alertForm input,
+    #alertForm textarea,
+    #alertForm select {
+      font-family: inherit;
+    }
+
+    #alertForm input:focus,
+    #alertForm textarea:focus,
+    #alertForm select:focus {
+      outline: none;
+      border-color: #3b82f6;
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    }
+
+    #alertForm button {
+      transition: all 0.3s ease;
+    }
+
+    #alertForm button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    #alertForm button:active {
+      transform: translateY(0);
+    }
+
+    /* Table Styling Enhancement */
+    table tbody tr {
+      transition: background-color 0.2s ease;
+    }
+
+    table tbody tr:hover {
+      background-color: #f9fafb;
+    }
+
+    table button {
+      transition: all 0.2s ease;
+      font-size: 12px;
+    }
+
+    table button:hover {
+      transform: scale(1.05);
+    }
+  </style>
+</head>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://unpkg.com/leaflet.heat/dist/leaflet-heat.js"></script>
+
+<body>
+
+<div class="container">
+
+
+  </div>
+
+  <!-- Main Content -->
+  <div class="main-content">
+    
+    <!-- Admin Header Bar -->
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; padding: 15px; background: white; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.08);">
+      <div>
+        <h1 style="margin: 0; color: #0f172a;">Dashboard Overview</h1>
+        <p style="margin: 5px 0 0 0; color: #64748b; font-size: 14px;">Admin: <strong id="adminEmail">Loading...</strong></p>
+      </div>
+      <button onclick="logout()" style="padding: 10px 20px; background: #ef4444; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 14px; transition: background 0.3s;">
+        🚪 Logout
+      </button>
+    </div>
+
+    <h1 style="display: none;">Dashboard Overview</h1>
+
+    <!-- Top Stats -->
+    <div class="dashboard-section">
+      <div class="cards">
+        <div class="stat-card"><h3>Total Alerts</h3><p id="totalAlertsCard">0</p></div>
+        <div class="stat-card"><h3>Active Disasters</h3><p id="activeAlertsCard">0</p></div>
+        <div class="stat-card"><h3>Critical Alerts</h3><p id="criticalAlertsCard">0</p></div>
+        <div class="stat-card"><h3>Total Casualties</h3><p id="totalCasualtiesCard">0</p></div>
+      </div>
+    </div>
+
+    <!-- Graph -->
+    <div class="dashboard-section">
+      <h2>Daily Disaster Trends</h2>
+      <canvas id="disasterChart"></canvas>
+    </div>
+
+    <!-- Active Operations -->
+    <div class="dashboard-section">
+      <h2>Active Rescue Operations</h2>
+      <table>
+        <tr>
+          <th>ID</th>
+          <th>Type</th>
+          <th>Location</th>
+          <th>Status</th>
+        </tr>
+        <tr><td>OP-102</td><td>Flood</td><td>Pune</td><td>Ongoing</td></tr>
+        <tr><td>OP-108</td><td>Fire</td><td>Nagpur</td><td>Ongoing</td></tr>
+      </table>
+    </div>
+
+    <!-- Casualty Stats -->
+    <div class="dashboard-section">
+      <h2>Casualty Statistics</h2>
+      <div class="cards">
+        <div class="stat-card"><h3>Rescued</h3><p>312</p></div>
+        <div class="stat-card"><h3>Missing</h3><p>28</p></div>
+        <div class="stat-card"><h3>Fatal</h3><p>11</p></div>
+      </div>
+    </div>
+
+    <!-- Alerts -->
+    <div class="dashboard-section" id="alertFormSection">
+      <h2 id="alertFormTitle">➕ Create New Alert</h2>
+      <form id="alertForm" style="background: white; padding: 20px; border-radius: 12px; box-shadow: 0 6px 15px rgba(0,0,0,0.08); display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px;">
+        <input type="hidden" id="currentEditingAlertId" />
+        
+        <input type="text" id="alertTitle" placeholder="Alert Title" required style="padding: 10px; border: 1px solid #e5e7eb; border-radius: 6px; font-size: 14px;">
+        
+        <textarea id="alertDescription" placeholder="Description" required style="padding: 10px; border: 1px solid #e5e7eb; border-radius: 6px; font-size: 14px; grid-column: 1 / -1;"></textarea>
+        
+        <select id="alertType" required style="padding: 10px; border: 1px solid #e5e7eb; border-radius: 6px; font-size: 14px;">
+          <option value="">Select Type</option>
+          <option value="Flood">Flood</option>
+          <option value="Earthquake">Earthquake</option>
+          <option value="Cyclone">Cyclone</option>
+          <option value="Fire">Fire</option>
+          <option value="Landslide">Landslide</option>
+        </select>
+        
+        <input type="text" id="alertLocation" placeholder="Location" required style="padding: 10px; border: 1px solid #e5e7eb; border-radius: 6px; font-size: 14px;">
+        
+        <select id="alertSeverity" required style="padding: 10px; border: 1px solid #e5e7eb; border-radius: 6px; font-size: 14px;">
+          <option value="">Select Severity</option>
+          <option value="Low">Low</option>
+          <option value="Medium">Medium</option>
+          <option value="High">High</option>
+          <option value="Critical">Critical</option>
+        </select>
+        
+        <input type="text" id="alertAffectedArea" placeholder="Affected Area" style="padding: 10px; border: 1px solid #e5e7eb; border-radius: 6px; font-size: 14px;">
+        
+        <input type="number" id="alertCasualties" placeholder="Casualties" min="0" value="0" style="padding: 10px; border: 1px solid #e5e7eb; border-radius: 6px; font-size: 14px;">
+        
+        <div style="grid-column: 1 / -1; display: flex; gap: 10px;">
+          <button type="submit" id="alertFormSubmitBtn" style="flex: 1; padding: 12px; background: #10b981; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 14px; transition: background 0.3s;">Create Alert</button>
+          <button type="button" id="cancelEditBtn" style="flex: 1; padding: 12px; background: #6b7280; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 14px; transition: background 0.3s;">Cancel</button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Real-Time Alerts List -->
+    <div class="dashboard-section">
+      <h2>🚨 Real-Time Alerts Management</h2>
+      <table>
+        <thead style="background: #f1f5f9;">
+          <tr>
+            <th>Title</th>
+            <th>Type</th>
+            <th>Location</th>
+            <th>Severity</th>
+            <th>Affected Area</th>
+            <th>Casualties</th>
+            <th>Created At</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="alertsTableBody">
+          <tr><td colspan="8" style="text-align: center; color: #999;">Loading alerts...</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Map -->
+    <div class="dashboard-section">
+      <h2>Live Disaster Map & Heatmap</h2>
+      <div id="map"></div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  /* Chart */
+  new Chart(document.getElementById("disasterChart"), {
+    type: "line",
+    data: {
+      labels: ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"],
+      datasets: [{
+        label: "Disasters",
+        data: [2,4,1,5,3,6,2],
+        borderWidth: 3,
+        tension: 0.4
+      }]
+    }
+  });
+
+  /* Map */
+  var map = L.map("map").setView([20.5937, 78.9629], 5);
+  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png").addTo(map);
+
+  var points = [
+    [18.5204, 73.8567, 0.8],
+    [21.1458, 79.0882, 0.6],
+    [28.6139, 77.2090, 0.9]
+  ];
+
+  L.heatLayer(points, { radius: 25 }).addTo(map);
+</script>
+
+<!-- Real-Time Dashboard Script -->
+<script src="admin-realtime.js"></script>
+
+</body>
+</html>

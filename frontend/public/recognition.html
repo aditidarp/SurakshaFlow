@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>NDARCS Admin Panel</title>
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <!-- Common CSS -->
+  <link rel="stylesheet" href="admin.css.css">
+</head>
+
+<body>
+<div class="container">
+
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <h2>NDARCS</h2>
+
+    <a href="admin.html">
+      <i class="fa-solid fa-chart-line"></i> Dashboard
+    </a>
+
+    <a href="manage.html">
+      <i class="fa-solid fa-pen"></i> Disaster Management
+    </a>
+
+    <a href="recognition.html">
+      <i class="fa-solid fa-robot"></i> Disaster Recognition
+    </a>
+
+    <a href="userm.html">
+      <i class="fa-solid fa-users"></i> User Management
+    </a>
+
+    <a href="rescue_operations.html">
+      <i class="fa-solid fa-truck-medical"></i> Rescue Operations
+    </a>
+
+    <a href="settings.html">
+      <i class="fa-solid fa-gear"></i> Settings
+    </a>
+  </div>  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: "Segoe UI", sans-serif;
+      background: linear-gradient(135deg, #f1f5f9, #e2e8f0);
+    }
+
+    .container {
+      display: flex;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      width: 230px;
+      background: #0f172a;
+      color: white;
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .sidebar h2 {
+      margin-bottom: 30px;
+    }
+
+    .sidebar a {
+      display: block;
+      color: #cbd5f5;
+      padding: 10px;
+      text-decoration: none;
+      margin-bottom: 8px;
+      border-radius: 6px;
+    }
+
+    .sidebar a.active,
+    .sidebar a:hover {
+      background: #2563eb;
+      color: white;
+    }
+
+    /* Main content */
+    .main-content {
+      flex: 1;
+      padding: 30px;
+    }
+
+    h1 {
+      margin-bottom: 20px;
+    }
+
+    /* Table */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: white;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 6px 15px rgba(0,0,0,0.08);
+    }
+
+    th, td {
+      padding: 12px;
+      border-bottom: 1px solid #e5e7eb;
+      text-align: left;
+    }
+
+    th {
+      background: #f1f5f9;
+    }
+
+    select {
+      padding: 5px 8px;
+      border-radius: 6px;
+      border: 1px solid #cbd5f5;
+    }
+
+    .action-btn {
+      background: #2563eb;
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      border-radius: 6px;
+      cursor: pointer;
+      margin-right: 5px;
+      font-size: 13px;
+    }
+
+    .action-btn.reject {
+      background: #ef4444;
+    }
+
+    .action-btn.false {
+      background: #f59e0b;
+    }
+
+    .confidence-bar {
+      height: 10px;
+      border-radius: 5px;
+      background: #e5e7eb;
+      width: 100px;
+      margin-top: 5px;
+      position: relative;
+    }
+
+    .confidence-fill {
+      height: 10px;
+      border-radius: 5px;
+      background: #10b981;
+      width: 0%;
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+
+    input[type="checkbox"] {
+      transform: scale(1.2);
+    }
+  </style>
+</head>
+
+<body>
+<div class="container">
+
+  <!-- Sidebar -->
+  
+  <!-- Main Content -->
+  <div class="main-content">
+    <h1>Disaster Recognition System</h1>
+
+    <table id="aiTable">
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Source</th>
+          <th>Confidence</th>
+          <th>Override / Edit Type</th>
+          <th>Mark False</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- AI detections -->
+      </tbody>
+    </table>
+  </div>
+
+</div>
+
+<script>
+  // Sample AI-detected disasters
+  let aiDisasters = [
+    { type: "Flood", source: "Satellite", confidence: 85, override: "", falseAlarm: false },
+    { type: "Fire", source: "Sensors", confidence: 72, override: "", falseAlarm: false },
+    { type: "Earthquake", source: "User Report", confidence: 60, override: "", falseAlarm: false }
+  ];
+
+  const tableBody = document.querySelector('#aiTable tbody');
+
+  function renderTable() {
+    tableBody.innerHTML = '';
+    aiDisasters.forEach((d, i) => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td>${d.type}</td>
+        <td>${d.source}</td>
+        <td>
+          <div class="confidence-bar">
+            <div class="confidence-fill" style="width: ${d.confidence}%"></div>
+          </div>
+          ${d.confidence}%
+        </td>
+        <td>
+          <select onchange="setOverride(${i}, this.value)">
+            <option value="">--Select--</option>
+            <option>Flood</option>
+            <option>Earthquake</option>
+            <option>Fire</option>
+            <option>Cyclone</option>
+            <option>Landslide</option>
+            <option>Heatwave</option>
+          </select>
+        </td>
+        <td>
+          <input type="checkbox" ${d.falseAlarm ? "checked" : ""} onchange="toggleFalse(${i}, this.checked)">
+        </td>
+        <td>
+          <button class="action-btn" onclick="approve(${i})">Approve</button>
+          <button class="action-btn reject" onclick="reject(${i})">Reject</button>
+        </td>
+      `;
+      tableBody.appendChild(tr);
+    });
+  }
+
+  function approve(index) {
+    alert(`Disaster "${aiDisasters[index].type}" approved.`);
+    aiDisasters.splice(index,1);
+    renderTable();
+  }
+
+  function reject(index) {
+    alert(`Disaster "${aiDisasters[index].type}" rejected.`);
+    aiDisasters.splice(index,1);
+    renderTable();
+  }
+
+  function setOverride(index, value) {
+    aiDisasters[index].override = value;
+  }
+
+  function toggleFalse(index, checked) {
+    aiDisasters[index].falseAlarm = checked;
+  }
+
+  renderTable();
+</script>
+
+</body>
+</html>
