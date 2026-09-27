@@ -8,6 +8,11 @@ const Alert = require('../models/Alert');
  * Creates user, admin, rescue team accounts and rescue teams if they don't exist
  */
 const seedTestUsers = async () => {
+  if (process.env.NODE_ENV === 'production') {
+    console.log('Production mode: skipping development seed data');
+    return;
+  }
+
   try {
     const testUsers = [
       {
